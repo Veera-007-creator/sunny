@@ -1,0 +1,44 @@
+name: Deploy to GCP
+
+on:
+  push:
+    branches:
+      - main # Trigger deployment on push to the main branch
+
+jobs:
+  deploy:
+    name: Deploy Resources to GCP
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout the repository
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    # Step 2: Set up Google Cloud authentication
+    - name: Authenticate to GCP
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: ${{ secrets.SUNNY_SECRET }}
+
+    # Step 3: Configure gcloud CLI
+    - name: Set up gcloud CLI
+      uses: google-github-actions/setup-gcloud@v1
+      with:
+        project_id: your-gcp-project-id # Replace with your GCP project ID
+        export_default_credentials: true
+
+    # Step 4: Deploy resources using a script or configuration file
+    - name: Deploy Resources
+      run: |
+        cd ./
+        # Example: Deploy using Terraform
+        terraform init
+        terraform apply -auto-approve
+
+        # Alternatively, deploy using gcloud CLI
+        # gcloud compute instances create my-instance \
+        #   --zone=us-central1-a \
+        #   --machine-type=e2-medium \
+        #   --image-family=debian-11 \
+        #   --image-project=debian-cloud
