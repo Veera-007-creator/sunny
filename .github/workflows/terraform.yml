@@ -27,9 +27,15 @@ jobs:
         project_id: your-gcp-project-id
         export_default_credentials: true
 
-    # Step 4: Initialize and apply Terraform
+    # Step 4: Install Terraform
+    - name: Install Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: 1.5.0 # Replace with the version you want to use
+
+    # Step 5: Initialize and apply Terraform
     - name: Terraform Init and Apply
+      working-directory: ep1 # Directory containing Terraform files
       run: |
-        cd ep1 # Navigate to the Terraform directory
         terraform init
         terraform apply -auto-approve
