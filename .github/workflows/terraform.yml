@@ -31,7 +31,7 @@ jobs:
     # Step 4: Deploy resources using a script or configuration file
     - name: Deploy Resources
       run: |
-        cd ../../ep1/
+        cd ./../../ep1/*
         # Example: Deploy using Terraform
         terraform init
         terraform apply -auto-approve
