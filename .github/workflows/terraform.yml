@@ -1,0 +1,35 @@
+name: Deploy to GCP with Terraform
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Check out the repository
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    # Step 2: Authenticate to GCP
+    - name: Authenticate to GCP
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: ${{ secrets.SUNNY_SECRET }}
+
+    # Step 3: Set up gcloud CLI
+    - name: Set up gcloud CLI
+      uses: google-github-actions/setup-gcloud@v1
+      with:
+        project_id: your-gcp-project-id
+        export_default_credentials: true
+
+    # Step 4: Initialize and apply Terraform
+    - name: Terraform Init and Apply
+      run: |
+        cd ep1 # Navigate to the Terraform directory
+        terraform init
+        terraform apply -auto-approve
