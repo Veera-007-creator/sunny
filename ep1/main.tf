@@ -1,4 +1,4 @@
-# Google reources####
+# Google reources###
 
 resource "google_storage_bucket" "bucket" {
   project  = "daring-keep-446309-u4"
